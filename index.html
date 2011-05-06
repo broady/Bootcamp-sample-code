@@ -5,6 +5,7 @@
     <title>Bootcamp 2011</title>
     <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
     <script type="text/javascript" src="http://microajax.googlecode.com/files/microajax.minified.js"></script>
+    <script type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
 
     <script type="text/javascript">
       google.maps.event.addDomListener(window, 'DOMContentLoaded', function() {
@@ -18,6 +19,8 @@
                 .replace(/>/g,'&gt;')
                 .replace(/</g,'&lt;')
                 .replace(/"/g,'&quot;');
+
+            prettyPrint();
           }
 
           if (typeof initialize != 'undefined') {
@@ -27,6 +30,7 @@
       });
     </script>
 
+    <link rel="stylesheet" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css">
     <style>
       #map-canvas {
         width: 500px;
@@ -34,12 +38,16 @@
       }
       #src-code {
         position: absolute;
-        left: 530px;
+        left: 520px;
+        width: 20em;
+        border: 0;
+        margin-top: 0;
+        font-family: Consolas, Menlo, monospace;
       }
     </style>
   </head>
   <body>
-    <pre id="src-code"></pre>
+    <pre id="src-code" class="prettyprint lang-js"></pre>
     <div id="map-canvas"></div>
   </body>
 </html>
