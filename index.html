@@ -9,24 +9,41 @@
 
     <script type="text/javascript">
       google.maps.event.addDomListener(window, 'DOMContentLoaded', function() {
+        var srcContainer = document.getElementById('src-code');
         var src = location.search ? location.search.substring(1) : 'list.js';
 
         microAjax(src, function(code) {
-          eval(code);
-          if (src != 'list.js') {
-            document.getElementById('src-code').innerHTML = code
-                .replace(/&/g,'&amp;')
-                .replace(/>/g,'&gt;')
-                .replace(/</g,'&lt;')
-                .replace(/"/g,'&quot;');
+          try {
+            eval(code);
+            if (src != 'list.js') {
+              srcContainer.innerHTML = code
+                  .replace(/&/g,'&amp;')
+                  .replace(/>/g,'&gt;')
+                  .replace(/</g,'&lt;')
+                  .replace(/"/g,'&quot;');
 
-            prettyPrint();
-          }
+              prettyPrint();
+            }
 
-          if (typeof initialize != 'undefined') {
-            initialize();
+            if (typeof initialize != 'undefined') {
+              initialize();
+            }
+          } catch(e) {
+            srcContainer.innerHTML = '<a href="#" onclick="window.location.search=\'\'">home</a><p>' + code;
           }
         });
+
+        var match = (window.location+'').match(/^(.*?)(0*)(\d+)([^\d]*)$/);
+        if (match) {
+          var next = document.createElement('button');
+          next.id = 'next-code';
+          next.innerHTML = 'Next &rarr;';
+          next.onclick = function() {
+            var newNum = 1 + Number(match[3]);
+            window.location = match[1] + match[2].substring((''+newNum).length != match[3].length) + newNum + match[4];
+          };
+          document.body.insertBefore(next, srcContainer);
+        }
       });
     </script>
 
@@ -46,6 +63,11 @@
         border: 0;
         margin-top: 0;
         font-family: Consolas, Menlo, monospace;
+      }
+      #next-code {
+        position: absolute;
+        top: 0;
+        right: 0;
       }
     </style>
   </head>
