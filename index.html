@@ -29,6 +29,7 @@
               initialize();
             }
           } catch(e) {
+            window.console && console.log(e);
             srcContainer.innerHTML = '<a href="#" onclick="window.location.search=\'\'">home</a><p>' + code;
           }
         });

@@ -6,12 +6,14 @@ function initialize() {
     mapTypeId: google.maps.MapTypeId.ROADMAP
   });
 
-  for (var i = 0; i < 20; i++) {
-    new google.maps.Marker({
-      position: randomLatLng(map.getBounds()),
-      map: map
-    });
-  }
+  google.maps.event.addListenerOnce(map, 'bounds_changed', function() {
+    for (var i = 0; i < 20; i++) {
+      new google.maps.Marker({
+        position: randomLatLng(map.getBounds()),
+        map: map
+      });
+    }
+  });
 }
 
 function randomLatLng(bounds) {
